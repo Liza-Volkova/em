@@ -1,4 +1,3 @@
-const obj = {}
-let isEmppty = false;
-...
-console.log(isEmpty)
+const obj = {};
+let isEmpty = Object.keys(obj).length === 0;
+console.log(isEmpty);

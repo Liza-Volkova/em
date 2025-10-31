@@ -6,5 +6,8 @@ const obj = {
 	prop5: 100,
 }
 const result = {};
-...
+for(const value of Object.values(obj)) {
+	let key = value === null ? null : typeof(value);
+	result[key] = (result[key] || 0) + 1;
+}
 console.log(result); // {null: 1, object: 1, string: 1, number: 2}
