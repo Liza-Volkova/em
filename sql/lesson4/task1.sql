@@ -1,0 +1,6 @@
+CREATE TABLE addresses (
+	id SERIAL PRIMARY KEY,
+	address VARCHAR(255),
+	users_id INT NOT NULL,
+	FOREIGN KEY (users_id) REFERENCES users (id) ON DELETE CASCADE
+);
