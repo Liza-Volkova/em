@@ -1,0 +1,5 @@
+notes/
+tasks/
+node_modules/
+node/node_modules/
+node/config/default.json
