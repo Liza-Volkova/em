@@ -1,0 +1,25 @@
+{
+  "name": "nodejs-em",
+  "version": "1.0.0",
+  "description": "- Елизавета Волкова - evolkova",
+  "main": "App.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Liza-Volkova/em.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Liza-Volkova/em/issues"
+  },
+  "homepage": "https://github.com/Liza-Volkova/em#readme",
+  "dependencies": {
+    "bcrypt": "^6.0.0",
+    "config": "^4.1.1",
+    "express": "^5.2.1",
+    "pg-promise": "^12.3.0"
+  }
+}
