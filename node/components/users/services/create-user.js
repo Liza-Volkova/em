@@ -1,6 +1,6 @@
 const Db = require('../../../libs/database');
 
-const CreateUsers = async (usersData) => {
+const CreateUsersService = async (usersData) => {
 	const { name, surname, password, email } = usersData;
 
 	const hashPassword = password; // Пароли надо скрывать
@@ -13,4 +13,4 @@ const CreateUsers = async (usersData) => {
 	return true;
 }
 
-module.exports = CreateUsers;
+module.exports = CreateUsersService;
