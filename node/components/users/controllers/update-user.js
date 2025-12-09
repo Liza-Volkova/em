@@ -1,4 +1,4 @@
-const UpdateUserService = require("../services/update-user");
+const UpdateUserService = require('#components/users/services/update-user');
 
 const UpdateUserController = async (req, res) => {
 	try {
