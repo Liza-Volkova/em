@@ -1,4 +1,4 @@
-const Db = require('../../../libs/database');
+const Db = require('#libs/database');
 
 const CreateUsersService = async (usersData) => {
 	const { name, surname, password, email } = usersData;

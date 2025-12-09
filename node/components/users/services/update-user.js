@@ -1,4 +1,4 @@
-const Db = require('../../../libs/database');
+const Db = require('#libs/database');
 
 const UpdateUserService = async (usersData) => {
 	const { id, name, surname } = usersData;
