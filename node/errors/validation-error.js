@@ -3,7 +3,7 @@ const BaseError = require('#classes/base-error')
 class ValidationError extends BaseError {
 	constructor(errorsData) {
 		super('Validation error', errorsData);
-		this.statusCode = 404;
+		this.statusCode = 400; // Исправлено: было 404
 	}
 }
 
