@@ -3,6 +3,7 @@ const GetTokensService = require('../services/get-tokens');
 const BaseController = require('#classes/base-controller');
 const JWT = require('jsonwebtoken');
 const Config = require('config');
+const { AuthorizationError, NotFoundError } = require('#errors');
 
 class GetNewKeysController extends BaseController {
 	get bodySchema() {
@@ -20,22 +21,41 @@ class GetNewKeysController extends BaseController {
 		const { refresh_token } = req.body;
 		const now = Date.now();
 
+		// Проверяем валидность токена
+		let decoded;
 		try {
-			const decoded = JWT.verify(refresh_token, Config.get('AUTH.REFRESH_TOKEN_KEY'));
+			decoded = JWT.verify(refresh_token, Config.get('AUTH.REFRESH_TOKEN_KEY'));
 			
 			const tokenExpireDate = new Date(decoded.expire).getTime();
-            
 			if (now > tokenExpireDate) {
-				throw new Error('Refresh token expired');
+				throw new AuthorizationError({
+					code: 'token_expired',
+					text: 'Refresh token истек',
+					data: {}
+				});
 			}
 		} catch (error) {
-			throw new Error('Invalid refresh token');
+			// Если это уже наш кастомный error, пробрасываем дальше
+			if (error.statusCode) {
+				throw error;
+			}
+			// Иначе - невалидный токен
+			throw new AuthorizationError({
+				code: 'invalid_token',
+				text: 'Невалидный refresh token',
+				data: {}
+			});
 		}
 
+		// Ищем пользователя по refresh_token
 		const user = await GetUserByRefreshTokenService(refresh_token);
 
 		if (!user) {
-			throw new Error('User not found');
+			throw new NotFoundError({
+				code: 'user_not_found',
+				text: 'Пользователь не найден',
+				data: {}
+			});
 		}
 
 		const session = {

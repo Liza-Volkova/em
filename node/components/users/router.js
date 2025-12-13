@@ -4,7 +4,7 @@ const GetUsersController = require('./controllers/get-users');
 const UpdateUserController = require('./controllers/update-user');
 const LoginController = require('./controllers/login');
 const GetNewKeysController = require('./controllers/get-new-keys');
-const AuthorizationMiddleware = require('#middlewares/auth-middleware');
+const AuthorizationMiddleware = require('#middlewares/auth');
 
 const Router = Express.Router();
 

@@ -1,4 +1,4 @@
-const GetUsersByEmailAndPAsswordService = require('../services/get-users-by-email-and-password');
+const GetUserByEmailService = require('../services/get-user-by-email');
 const GetTokensService = require('../services/get-tokens');
 const BaseController = require('#classes/base-controller');
 const { AuthorizationError } = require('#errors');
@@ -19,12 +19,13 @@ class LoginController extends BaseController {
 	async controller(req) {
 		const { email, password } = req.body;
 
-		const user = await GetUsersByEmailAndPAsswordService(email, password);
+		const user = await GetUserByEmailService(email, password);
 
 		if(!user) {
 			throw new AuthorizationError({
 				code: 'authorization_failed',
-				text: 'Email или пароль не верен'
+				text: 'Email или пароль не верен',
+				data: {}
 			})
 		}
 
@@ -35,7 +36,7 @@ class LoginController extends BaseController {
 			email: user.email,
 		}
 
-		const tokens = GetTokensService(session);
+		const tokens = await GetTokensService(session);
 
 		return tokens
 	}
