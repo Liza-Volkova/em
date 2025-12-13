@@ -1,5 +1,6 @@
 const Ajv = require('ajv').default;
 const ajvFormats = require('ajv-formats');
+const { ValidationError } = require('#errors');
 
 const ajv = new Ajv({ allErrors: true });
 ajvFormats(ajv, ['email']);
@@ -57,16 +58,24 @@ class BaseController {
 		return errorsList;
 	}
 	
-	async run(req, res) {
+	async run(req, res, next) {
 		const errorsList = this.validate(req);
 
 		if(Object.keys(errorsList).length > 0) {
-			return res.status(400).send(errorsList);
+			throw new ValidationError({
+				code: 'validation_error',
+				text: 'Ошибка валидации',
+				data: errorsList,
+			});
 		}
+		try {
+			const result = await this.controller(req);
 
-		const result = await this.controller(req);
-
-		res.status(200).send(result)
+			res.status(200).send(result)
+		} catch(error) {
+			return next(error);
+		}
+		
 	}
 }
 
