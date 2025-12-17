@@ -1,34 +1,29 @@
-const Db = require('#libs/database');
+const Prisma = require('#libs/prisma');
 
 const UpdateCourseService = async (courseId, updateData) => {
 	const { name, description } = updateData;
-	const updates = [];
-	const values = [];
-	let paramIndex = 1;
-
+	
+	const data = {};
 	if (name !== undefined) {
-		updates.push(`name = $${paramIndex++}`);
-		values.push(name);
+		data.name = name;
 	}
-
 	if (description !== undefined) {
-		updates.push(`description = $${paramIndex++}`);
-		values.push(description);
+		data.description = description;
 	}
 
-	if (updates.length === 0) {
-		const course = await Db.one('SELECT * FROM courses WHERE id = $1', [courseId]);
+	if (Object.keys(data).length === 0) {
+		const course = await Prisma.course.findUnique({
+			where: { id: parseInt(courseId, 10) },
+		});
 		return course;
 	}
 
-	values.push(courseId);
+	const updatedCourse = await Prisma.course.update({
+		where: { id: parseInt(courseId, 10) },
+		data,
+	});
 
-	const course = await Db.one(
-		`UPDATE courses SET ${updates.join(', ')} WHERE id = $${paramIndex} RETURNING *`,
-		values
-	);
-
-	return course;
+	return updatedCourse;
 }
 
 module.exports = UpdateCourseService;

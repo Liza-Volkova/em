@@ -1,10 +1,10 @@
-const Db = require('#libs/database');
+const Prisma = require('#libs/prisma');
 
 const GetMentorCoursesService = async (mentorId) => {
-	const courses = await Db.manyOrNone(
-		'SELECT * FROM courses WHERE mentor_id = $1 ORDER BY id',
-		[mentorId]
-	);
+	const courses = await Prisma.course.findMany({
+		where: { mentor_id: mentorId },
+		orderBy: { id: 'asc' },
+	});
 
 	return courses;
 }

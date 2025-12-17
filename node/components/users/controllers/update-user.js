@@ -3,7 +3,7 @@ const UpdateUserService = require('#components/users/services/update-user');
 const UpdateUserController = async (req, res) => {
 	try {
 		const usersData = {
-			id: req.params.id,
+			id: parseInt(req.params.id, 10),
 			name: req.body.name,
 			surname: req.body.surname,
 		}

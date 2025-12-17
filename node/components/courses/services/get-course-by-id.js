@@ -1,10 +1,10 @@
-const Db = require('#libs/database');
+const Prisma = require('#libs/prisma');
 
 const GetCourseByIdService = async (id) => {
 
-	const course = await Db.oneOrNone(
-		'SELECT * FROM courses WHERE id = $1', [id],
-	);
+	const course = await Prisma.course.findUnique({
+		where: { id: parseInt(id, 10) },
+	});
 
 	return course;
 }

@@ -1,4 +1,3 @@
-const Db = require('#libs/database');
 const Redis = require('#libs/redis');
 
 const GetSessionByTokenService = async (authorization) => {

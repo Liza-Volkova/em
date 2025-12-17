@@ -1,7 +1,9 @@
-const Db = require('#libs/database');
+const Prisma = require('#libs/prisma');
 
 const DeleteCourseService = async (courseId) => {
-	await Db.none('DELETE FROM courses WHERE id = $1', [courseId]);
+	await Prisma.course.delete({
+		where: { id: parseInt(courseId, 10) },
+	});
 	return true;
 }
 
