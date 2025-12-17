@@ -1,4 +1,4 @@
-const GetUserByEmailService = require('../services/get-user-by-email');
+const GetUserByEmailAndPasswordService = require('../services/get-user-by-email-and-password');
 const GetTokensService = require('../services/get-tokens');
 const BaseController = require('#classes/base-controller');
 const { AuthorizationError } = require('#errors');
@@ -19,7 +19,7 @@ class LoginController extends BaseController {
 	async controller(req) {
 		const { email, password } = req.body;
 
-		const user = await GetUserByEmailService(email, password);
+		const user = await GetUserByEmailAndPasswordService(email, password);
 
 		if(!user) {
 			throw new AuthorizationError({
@@ -34,6 +34,7 @@ class LoginController extends BaseController {
 			name: user.name,
 			surname: user.surname,
 			email: user.email,
+			role: user.role
 		}
 
 		const tokens = await GetTokensService(session);

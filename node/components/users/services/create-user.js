@@ -1,5 +1,5 @@
 const Db = require('#libs/database');
-const SHA256 = require('../../../helpers/SHA256');
+const SHA256 = require('#helpers/SHA256');
 
 const CreateUsersService = async (usersData) => {
 	const { name, surname, password, email } = usersData;
@@ -7,8 +7,8 @@ const CreateUsersService = async (usersData) => {
 	const hashPassword = SHA256(password); // Пароли надо скрывать
 
 	await Db.none(
-		'INSERT INTO users (name, surname, password, email) VALUES ($1, $2, $3, $4)',
-		[name, surname, hashPassword, email],
+		'INSERT INTO users (name, surname, password, email, role) VALUES ($1, $2, $3, $4, $5)',
+		[name, surname, hashPassword, email, 'student'],
 	);
 
 	return true;
