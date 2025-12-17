@@ -1,5 +1,5 @@
 const CreateUsersService = require('#components/users/services/create-user');
-const CheckUserByEmailService = require('#components/users/services/check-user-by-email');
+const GetUserByEmailService = require('#components/users/services/get-user-by-email');
 const BaseController = require('#classes/base-controller');
 const { ConflictError } = require('#errors');
 
@@ -21,8 +21,7 @@ class CreateUserController extends BaseController {
 	async controller(req) {
 		const { email } = req.body;
 
-		// Проверяем, существует ли пользователь с таким email
-		const existingUser = await CheckUserByEmailService(email);
+		const existingUser = await GetUserByEmailService(email);
 
 		if (existingUser) {
 			throw new ConflictError({

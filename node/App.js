@@ -2,6 +2,7 @@ const Express = require('express');
 const Router = require('./routes');
 const Config = require('config');
 const UsersRouter = require('#components/users/router');
+const CoursesRouter = require('#components/courses/router');
 const ErrorsMiddleware = require('#middlewares/errors');
 
 const App = Express();
@@ -15,6 +16,7 @@ App.use(Express.json());
 // Подключаем роутеры
 App.use(Router);
 App.use(UsersRouter);
+App.use(CoursesRouter);
 
 // Error-handling middleware должен быть ПОСЛЕ всех роутеров
 App.use(ErrorsMiddleware);
