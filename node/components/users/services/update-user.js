@@ -1,17 +1,18 @@
-const Db = require('#libs/database');
+const Prisma = require('#libs/prisma');
 
 const UpdateUserService = async (usersData) => {
 	const { id, name, surname } = usersData;
 	
-	await Db.none(
-		'UPDATE users SET name = $1, surname = $2 WHERE id = $3',
-		[name, surname, id],
-	);
-	
-	const updatedUser = await Db.one(
-		'SELECT id, name, surname, email FROM users WHERE id = $1',
-		[id],
-	);
+	const updatedUser = await Prisma.user.update({
+		where: { id },
+		data: { name, surname },
+		select: {
+			id: true,
+			name: true,
+			surname: true,
+			email: true,
+		},
+	});
 
 	return updatedUser;
 }

@@ -1,14 +1,23 @@
-const Db = require('#libs/database');
+const Prisma = require('#libs/prisma');
 
 const GetUsersService = async (page, limit) => {
 	const offset = (page - 1) * limit;
 
 	const [users, totalCount] = await Promise.all([
-		Db.manyOrNone(
-			'SELECT id, name, surname, email FROM users ORDER BY id LIMIT $1 OFFSET $2',
-			[limit, offset],
-		),
-		Db.one('SELECT COUNT(*) as count FROM users', [], row => parseInt(row.count))
+		Prisma.user.findMany({
+			skip: offset,
+			take: limit,
+			orderBy: {
+				id: 'asc',
+			},
+			select: {
+				id: true,
+				name: true,
+				surname: true,
+				email: true,
+			},
+		}),
+		Prisma.user.count(),
 	]);
 
 	return {

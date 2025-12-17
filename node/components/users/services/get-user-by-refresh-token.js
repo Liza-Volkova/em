@@ -1,7 +1,15 @@
-const Db = require('#libs/database');
+const Prisma = require('#libs/prisma');
 
 const GetUserByRefreshTokenService = async (refreshToken) => {
-    const user = await Db.oneOrNone('SELECT * FROM users WHERE refresh_token = $1', [refreshToken]);
+    const user = await Prisma.user.findUnique({
+		where: { refresh_token: refreshToken },
+		select: {
+			id: true,
+			name: true,
+			surname: true,
+			email: true,
+		},
+	});
 
 	return user;
 }

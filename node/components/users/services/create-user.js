@@ -1,4 +1,4 @@
-const Db = require('#libs/database');
+const Prisma = require('#libs/prisma');
 const SHA256 = require('#helpers/SHA256');
 
 const CreateUsersService = async (usersData) => {
@@ -6,10 +6,9 @@ const CreateUsersService = async (usersData) => {
 
 	const hashPassword = SHA256(password); // Пароли надо скрывать
 
-	await Db.none(
-		'INSERT INTO users (name, surname, password, email, role) VALUES ($1, $2, $3, $4, $5)',
-		[name, surname, hashPassword, email, 'student'],
-	);
+	await Prisma.user.create({
+		data: { name, surname, password: hashPassword, email, role: 'student' },
+	});
 
 	return true;
 }

@@ -1,5 +1,75 @@
+# Личные папки
 notes/
 tasks/
+
+# Зависимости
 node_modules/
 node/node_modules/
+**/node_modules/
+
+# Конфигурация с секретами
 node/config/default.json
+config/default.json
+**/config/default.json
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+*.env
+node/.env
+**/.env
+
+# Prisma - сгенерированный клиент (миграции и schema.prisma остаются в git)
+node_modules/.prisma/
+node/node_modules/.prisma/
+**/node_modules/.prisma/
+node/prisma/generated/
+**/generated/prisma
+
+# Логи
+*.log
+logs/
+*.log.*
+
+# Временные файлы
+*.tmp
+*.temp
+.cache/
+.temp/
+
+# IDE и редакторы
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# OS файлы
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+Desktop.ini
+
+# Package manager lock files (раскомментируйте если не хотите коммитить)
+# package-lock.json
+# yarn.lock
+# pnpm-lock.yaml
+
+# Build и dist папки (если будут)
+dist/
+build/
+*.tsbuildinfo
+
+# Coverage reports
+coverage/
+.nyc_output/
+
+# Docker
+.dockerignore

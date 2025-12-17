@@ -1,9 +1,9 @@
-const Db = require('#libs/database');
+const Prisma = require('#libs/prisma');
 
 const GetAllCoursesService = async () => {
-	const courses = await Db.manyOrNone(
-		'SELECT * FROM courses ORDER BY id'
-	);
+	const courses = await Prisma.course.findMany({
+		orderBy: { id: 'asc' },
+	});
 
 	return courses;
 }
